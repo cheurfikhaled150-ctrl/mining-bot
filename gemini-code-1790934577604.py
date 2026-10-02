@@ -8,7 +8,12 @@ import random
 import hashlib
 import hmac
 from urllib.parse import parse_qsl
-
+elif self.path == "/api/deposit":
+            user["balance"] += 50.0
+            user["pool_wallet"] += 50.0
+            update_user_db(user)
+            log_transaction(uid, 'TEST_DEPOSIT', 50.0, 'Test deposit added')
+            response = {"status": "success", "message": "تم إيداع 50 ATR تجريبية بنجاح!"}
 PORT = int(os.environ.get("PORT", 8000))
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "YOUR_TELEGRAM_BOT_TOKEN")  # ضع توكن بوت تيليجرام الحقيقي هنا
 
@@ -97,7 +102,36 @@ def log_transaction(telegram_id, trans_type, amount, details=""):
     conn = sqlite3.connect('atr_mining.db', check_same_thread=False)
     cursor = conn.cursor()
     cursor.execute('INSERT INTO transactions (telegram_id, type, amount, timestamp, details) VALUES (?, ?, ?, ?, ?)',
-                   (telegram_id, trans_type, amount, time.time(), details))
+     elif self.path == "/api/deposit":
+            user["balance"] += 50.0
+            user["pool_wallet"] += 50.0
+            update_user_db(user)
+            log_transaction(uid, 'TEST_DEPOSIT', 50.0, 'Test deposit added')
+            response = {"status": "success", "message": "تم إيداع 50 ATR تجريبية بنجاح!"}
+
+        elif self.path == "/webhook":
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            try:
+                update = json.loads(post_data.decode('utf-8'))
+                if "message" in update:
+                    message = update["message"]
+                    chat_id = message["chat"]["id"]
+                    text = message.get("text", "")
+                    if text.startswith("/start"):
+                        webapp_url = "https://your-domain.com"
+                        reply_markup = {
+                            "inline_keyboard": [
+                                [{"text": "🚀 فتح تطبيق التعدين", "web_app": {"url": webapp_url}}]
+                            ]
+                        }
+                        send_telegram_message(chat_id, "أهلاً بك في بوت التعدين! اضغط بالأسفل لفتح التطبيق:", reply_markup)
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"OK")
+                return
+            except Exception as e:
+                print(f"Webhook Error: {e}")              (telegram_id, trans_type, amount, time.time(), details))
     conn.commit()
     conn.close()
 
