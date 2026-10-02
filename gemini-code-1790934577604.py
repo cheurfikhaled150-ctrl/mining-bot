@@ -337,7 +337,7 @@ HTML_CONTENT = """
         let remainingSeconds = 30;
         let AdController = null;
         try { 
-            AdController = window.Adsgram.init({ blockId: "int-123456", userId: userId.toString() }); 
+            AdController = window.Adsgram.init({ blockId: "51580", userId: userId.toString() }); 
         } catch (e) {}
 
         function switchTab(tabName) {
